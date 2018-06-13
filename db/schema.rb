@@ -26,6 +26,10 @@ ActiveRecord::Schema.define(version: 2018_06_13_183041) do
     t.float "applicant_rating_avg"
     t.integer "trainee_rating_count"
     t.float "trainee_rating_avg"
+    t.integer "recomendation_rate"
+    t.integer "visits_count"
+    t.integer "employer_comments_count"
+    t.integer "reviews_count"
     t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

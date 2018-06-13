@@ -14,6 +14,10 @@ class CreateInitialTables < ActiveRecord::Migration[5.2]
       t.float :applicant_rating_avg
       t.integer :trainee_rating_count
       t.float :trainee_rating_avg
+      t.integer :recomendation_rate
+      t.integer :visits_count
+      t.integer :employer_comments_count
+      t.integer :reviews_count
       t.references :company, foreign_key: true
 
       t.timestamps
