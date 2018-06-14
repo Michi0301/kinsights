@@ -12,14 +12,17 @@
 
 ActiveRecord::Schema.define(version: 2018_06_13_183041) do
 
-  create_table "companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "snapshots", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "snapshots", force: :cascade do |t|
     t.integer "employee_rating_count"
     t.float "employee_rating_avg"
     t.integer "applicant_rating_count"
