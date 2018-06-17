@@ -5,8 +5,10 @@ class Snapshot < ApplicationRecord
     ((employee_rating_count * employee_rating_avg +
       applicant_rating_count * applicant_rating_avg +
       trainee_rating_count * trainee_rating_avg)/
-      (employee_rating_count + 
-      applicant_rating_count + 
-      trainee_rating_count)).round(2)
+      total_rating_count).round(2)
+  end
+
+  def total_rating_count
+    employee_rating_count + applicant_rating_count + trainee_rating_count
   end
 end
