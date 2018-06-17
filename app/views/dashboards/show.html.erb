@@ -1,21 +1,31 @@
-<% @companies.each do |company| %>
-  <h2><%= company.name %></h2>
+<div class="row">
+  <div class="col-12">
+    <% @companies.each do |company| %>
+      <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title"><%= company.name %></h6>
 
-  <h3>Rating:</h3>
+          <h6 class="card-subtitle mb-2 text-muted">Rating:</h6>
 
-  <%= line_chart [
-    { name: 'employee rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.employee_rating_avg]} },
-    { name: 'applicant rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.applicant_rating_avg]} },
-    { name: 'trainee rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.trainee_rating_avg]} },
-    { name: 'total rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.total_rating]} }
-  ] %>
+          <%= line_chart [
+            { name: 'employee rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.employee_rating_avg]} },
+            { name: 'applicant rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.applicant_rating_avg]} },
+            { name: 'trainee rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.trainee_rating_avg]} },
+            { name: 'total rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.total_rating]} }
+          ] %>
 
-  <h3>Rating count:</h3>
+          <hr/>
 
-  <%= line_chart [
-    { name: 'employee rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.employee_rating_count]} },
-    { name: 'applicant rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.applicant_rating_count]} },
-    { name: 'trainee rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.trainee_rating_count]} },
-    { name: 'total rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.total_rating_count]} }
-  ] %>
-<% end %>
+          <h6 class="card-subtitle mb-2 text-muted">Rating count:</h6>
+
+          <%= line_chart [
+            { name: 'employee rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.employee_rating_count]} },
+            { name: 'applicant rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.applicant_rating_count]} },
+            { name: 'trainee rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.trainee_rating_count]} },
+            { name: 'total rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.total_rating_count]} }
+          ] %>
+        </div>
+      </div>  
+    <% end %>
+  </div>
+</div>
