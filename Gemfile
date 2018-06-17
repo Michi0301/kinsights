@@ -6,7 +6,13 @@ ruby '2.5.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
 
-gem 'pg'
+group :postgres, optional: true do
+  gem 'pg'
+end
+
+group :mysql2 , optional: true do
+  gem 'mysql2', '>= 0.4.4', '< 0.6.0'
+end
 
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
@@ -53,3 +59,7 @@ gem 'faraday'
 gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails'
 gem 'chartkick'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.7'
+end
