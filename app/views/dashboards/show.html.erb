@@ -7,23 +7,14 @@
 
           <h6 class="card-subtitle mb-2 text-muted">Rating:</h6>
 
-          <%= line_chart [
-            { name: 'employee rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.employee_rating_avg]} },
-            { name: 'applicant rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.applicant_rating_avg]} },
-            { name: 'trainee rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.trainee_rating_avg]} },
-            { name: 'total rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.total_rating]} }
-          ], min: 0, max: 5 %>
+          <%= render_rating_chart(company) %>
 
           <hr/>
 
           <h6 class="card-subtitle mb-2 text-muted">Rating count:</h6>
 
-          <%= line_chart [
-            { name: 'employee rating avg', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.employee_rating_count]} },
-            { name: 'applicant rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.applicant_rating_count]} },
-            { name: 'trainee rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.trainee_rating_count]} },
-            { name: 'total rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.total_rating_count]} }
-          ] %>
+          <%= render_rating_count_chart(company) %>
+
         </div>
       </div>
     <% end %>
