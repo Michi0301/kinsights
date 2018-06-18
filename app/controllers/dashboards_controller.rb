@@ -1,5 +1,5 @@
 class DashboardsController < ApplicationController
   def show
-    @companies = Company.all
+    @companies = Company.order(:name)
   end
 end
