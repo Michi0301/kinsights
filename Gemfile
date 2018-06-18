@@ -54,6 +54,8 @@ gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails'
 gem 'chartkick'
 
-group :development, :test do
+group :test do
   gem 'rspec-rails', '~> 3.7'
+  gem 'shoulda-matchers'
+  gem 'factory_bot_rails'
 end
