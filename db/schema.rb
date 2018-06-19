@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_13_183041) do
+ActiveRecord::Schema.define(version: 2018_06_18_155340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,34 @@ ActiveRecord::Schema.define(version: 2018_06_13_183041) do
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.float "total_rating"
+    t.date "publish_date"
+    t.string "url"
+    t.float "social_rating"
+    t.float "work_life_rating"
+    t.float "image_rating"
+    t.float "work_environment_rating"
+    t.float "supervisor_behavior_rating"
+    t.float "colleague_behavior_rating"
+    t.float "interesting_tasks_rating"
+    t.float "communication_rating"
+    t.float "equality_rating"
+    t.float "elder_colleagues_rating"
+    t.float "career_rating"
+    t.float "salary_rating"
+    t.float "working_conditions_rating"
+    t.string "company_name"
+    t.string "city"
+    t.string "job_state"
+    t.string "position"
+    t.string "department"
+    t.bigint "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_reviews_on_company_id"
   end
 
   create_table "snapshots", force: :cascade do |t|
@@ -39,5 +67,6 @@ ActiveRecord::Schema.define(version: 2018_06_13_183041) do
     t.index ["company_id"], name: "index_snapshots_on_company_id"
   end
 
+  add_foreign_key "reviews", "companies"
   add_foreign_key "snapshots", "companies"
 end
