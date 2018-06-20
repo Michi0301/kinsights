@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_20_101033) do
+ActiveRecord::Schema.define(version: 2018_06_20_145112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,25 +67,7 @@ ActiveRecord::Schema.define(version: 2018_06_20_101033) do
     t.index ["company_id"], name: "index_reviews_on_company_id"
   end
 
-  create_table "snapshots", force: :cascade do |t|
-    t.integer "employee_rating_count"
-    t.float "employee_rating_avg"
-    t.integer "applicant_rating_count"
-    t.float "applicant_rating_avg"
-    t.integer "trainee_rating_count"
-    t.float "trainee_rating_avg"
-    t.integer "recomendation_rate"
-    t.integer "visits_count"
-    t.integer "employer_comments_count"
-    t.integer "reviews_count"
-    t.bigint "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["company_id"], name: "index_snapshots_on_company_id"
-  end
-
   add_foreign_key "charts", "companies"
   add_foreign_key "data_sets", "charts"
   add_foreign_key "reviews", "companies"
-  add_foreign_key "snapshots", "companies"
 end

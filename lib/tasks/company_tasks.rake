@@ -1,8 +1,8 @@
-namespace :snapshots do
-  desc "Creates a snapshot for all registered companies."
-  task :create => :environment do
+namespace :reviews do
+  desc "Imports reviews for all companies."
+  task :import => :environment do
     Company.find_each do |company|
-      CreateSnapshot.new(company).call
+      ImportReviews.new(company, '_').call
     end
   end
 end
