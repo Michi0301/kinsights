@@ -9,7 +9,7 @@ RSpec.describe Company, type: :model do
   end
 
   describe '#comments_url' do
-    it { expect(subject.comments_url).to eq('https://www.example.com/de/acme-inc/kommentare/') }
+    it { expect(subject.comments_url).to eq('https://www.example.com/de/acme-inc/kommentare/1') }
     it { expect(subject.comments_url(5)).to eq('https://www.example.com/de/acme-inc/kommentare/5') }
   end
 end
