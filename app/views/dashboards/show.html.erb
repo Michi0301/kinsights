@@ -5,8 +5,18 @@
         <div class="card-body">
           <h5 class="card-title"><%= company.name %></h6>
 
-          <h6 class="card-subtitle mb-2 text-muted">Rating:</h6>
+          <h6 class="card-subtitle mb-2 mt-2">
+            Trend: 
+            <span class="badge badge-<%=company.total_rating_trend == :positive ? 'success' : 'danger'%>">
+              <%= company.total_rating_trend %>
+            </span>
+          </h6>
 
+          <h6 class="card-subtitle mb-2 mt-2">
+            Average: <%= company.total_rating_average.round(2) %>
+          </h6>
+
+          <h6 class="card-subtitle mb-2 mt-4 text-muted">Rating:</h6>
           <%= render_daily_avg_review_rating(company, @start_date, @end_date) %>
 
           <hr/>

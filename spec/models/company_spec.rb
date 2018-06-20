@@ -34,4 +34,13 @@ RSpec.describe Company, type: :model do
       it { expect(subject.total_rating_trend).to eq(:negative) }
     end
   end
+
+  describe '#total_rating_average' do
+    before do
+      subject.save!
+      10.times { FactoryBot.create(:review, company: subject, total_rating: 3.0) }
+    end
+
+    it { expect(subject.total_rating_average).to eq(3.0) }
+  end
 end
