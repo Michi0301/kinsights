@@ -7,4 +7,19 @@ class Company < ApplicationRecord
   def comments_url(page=1)
     "#{url}/kommentare/#{page}"
   end
+
+  def total_rating_trend
+    trend_is_positive? ? :positive : :negative
+  end
+
+  private
+
+  def total_rating_average_for_last(n)
+    reviews.last(n).pluck(:total_rating).sum / n
+  end
+
+  def trend_is_positive?
+
+    total_rating_average_for_last(5) > total_rating_average_for_last(reviews.count)
+  end
 end

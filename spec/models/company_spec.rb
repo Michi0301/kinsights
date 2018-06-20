@@ -12,4 +12,26 @@ RSpec.describe Company, type: :model do
     it { expect(subject.comments_url).to eq('https://www.example.com/de/acme-inc/kommentare/1') }
     it { expect(subject.comments_url(5)).to eq('https://www.example.com/de/acme-inc/kommentare/5') }
   end
+
+  describe '#trend' do
+    context 'positive' do
+      before do
+        subject.save!
+        10.times { FactoryBot.create(:review, company: subject, total_rating: 3.0) }
+        5.times  { FactoryBot.create(:review, company: subject, total_rating: 4.0) }
+      end
+
+      it { expect(subject.total_rating_trend).to eq(:positive) }
+    end
+
+    context 'negative' do
+      before do
+        subject.save!
+        10.times { FactoryBot.create(:review, company: subject, total_rating: 3.0) }
+        5.times  { FactoryBot.create(:review, company: subject, total_rating: 2.0) }
+      end
+
+      it { expect(subject.total_rating_trend).to eq(:negative) }
+    end
+  end
 end
