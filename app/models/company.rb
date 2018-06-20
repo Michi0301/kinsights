@@ -3,6 +3,7 @@ class Company < ApplicationRecord
 
   has_many :snapshots, inverse_of: :company, dependent: :destroy
   has_many :reviews, inverse_of: :company, dependent: :destroy
+  has_many :charts
 
   def comments_url(page=1)
     "#{url}/kommentare/#{page}"

@@ -10,16 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_18_155340) do
+ActiveRecord::Schema.define(version: 2018_06_20_101033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "charts", force: :cascade do |t|
+    t.bigint "company_id"
+    t.string "chart_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_charts_on_company_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "data_sets", force: :cascade do |t|
+    t.string "dataset_type"
+    t.bigint "chart_id"
+    t.json "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chart_id"], name: "index_data_sets_on_chart_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -67,6 +84,8 @@ ActiveRecord::Schema.define(version: 2018_06_18_155340) do
     t.index ["company_id"], name: "index_snapshots_on_company_id"
   end
 
+  add_foreign_key "charts", "companies"
+  add_foreign_key "data_sets", "charts"
   add_foreign_key "reviews", "companies"
   add_foreign_key "snapshots", "companies"
 end
