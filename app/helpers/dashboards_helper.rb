@@ -16,4 +16,35 @@ module DashboardsHelper
       { name: 'total rating count', data: company.snapshots.map { |s|  [ s.created_at.to_date, s.total_rating_count]} }
     ]
   end
+
+
+  def calculate_daily_avg_review_rating(company, start_date, end_date)
+    start_date.upto(end_date).map do |date|
+      reviews = company.reviews.where(publish_date: start_date..date)
+
+      total_rating_avg = reviews.sum(:total_rating) / reviews.count
+
+      [date, total_rating_avg]
+    end
+  end
+
+  def render_daily_avg_review_rating(company, start_date, end_date)
+    line_chart [
+      { name: 'total rating', data: calculate_daily_avg_review_rating(company, start_date, end_date) }
+    ], min: 0, max: 5
+  end
+
+  def calculate_daily_avg_review_count(company, start_date, end_date)
+    start_date.upto(end_date).map do |date|
+      revtotal_rating_avg_count = company.reviews.where(publish_date: start_date..date).count
+
+      [date, revtotal_rating_avg_count]
+    end
+  end
+
+  def render_daily_avg_review_count(company, start_date, end_date)
+    line_chart [
+      { name: 'total rating count', data: calculate_daily_avg_review_count(company, start_date, end_date) }
+    ]
+  end
 end
