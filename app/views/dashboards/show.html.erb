@@ -17,13 +17,13 @@
           </h6>
 
           <h6 class="card-subtitle mb-2 mt-4 text-muted">Rating:</h6>
-          <%= render_daily_avg_review_rating(company, @start_date, @end_date) %>
+          <%= render_daily_avg_review_rating(company) %>
 
           <hr/>
 
           <h6 class="card-subtitle mb-2 text-muted">Rating count:</h6>
 
-          <%= render_daily_avg_review_count(company, @start_date, @end_date) %>
+          <%= render_daily_avg_review_count(company) %>
         </div>
       </div>
     <% end %>
