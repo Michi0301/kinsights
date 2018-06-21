@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_20_145112) do
+ActiveRecord::Schema.define(version: 2018_06_21_090118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,7 +42,6 @@ ActiveRecord::Schema.define(version: 2018_06_20_145112) do
   create_table "reviews", force: :cascade do |t|
     t.float "total_rating"
     t.date "publish_date"
-    t.string "url"
     t.float "social_rating"
     t.float "work_life_rating"
     t.float "image_rating"
@@ -64,7 +63,9 @@ ActiveRecord::Schema.define(version: 2018_06_20_145112) do
     t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "foreign_id", null: false
     t.index ["company_id"], name: "index_reviews_on_company_id"
+    t.index ["foreign_id"], name: "index_reviews_on_foreign_id"
   end
 
   add_foreign_key "charts", "companies"
