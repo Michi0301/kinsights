@@ -1,11 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe ImportReviews, type: :model do
-  subject { described_class.new(company, _last_review_date).call }
+  subject { described_class.new(company).call }
 
   describe '#call' do
     let(:company) { FactoryBot.create(:company, url: 'https://test.de/de/my-company')}
-    let(:_last_review_date) { }
 
     before do
       stub_request(:get, 'https://test.de/de/my-company/kommentare/1')
@@ -30,6 +29,10 @@ RSpec.describe ImportReviews, type: :model do
     context 'full import' do
       it 'imports all reviews' do
         expect{ subject }.to change(Review, :count).by(20)
+      end
+
+      it 'returns the amount of imported reviews' do
+        expect(subject).to eq(20)
       end
 
       it 'assigns correct values' do
@@ -90,6 +93,10 @@ RSpec.describe ImportReviews, type: :model do
 
       it 'only imports unknown reviews' do
         expect{ subject }.to change(Review, :count).by(1)
+      end
+
+      it 'returns the amount of imported reviews' do
+        expect(subject).to eq(1)
       end
     end
   end

@@ -1,7 +1,6 @@
 class ImportReviews
-  def initialize(company, last_review_date)
+  def initialize(company)
     @company = company
-    @last_review_date = last_review_date
   end
 
   def call
@@ -12,7 +11,7 @@ class ImportReviews
 
   attr_reader :company
 
-  def import_reviews(page=1)
+  def import_reviews(page=1, imported=0)
     document = Nokogiri::HTML(Request.new(company.comments_url(page)).get)
 
     document.css('article[itemprop=review]').each do |review_doc|
@@ -29,14 +28,15 @@ class ImportReviews
       end
 
       # Stop import as soon as one known review appears
-      return if Review.exists?(foreign_id: review.foreign_id)
+      return imported if Review.exists?(foreign_id: review.foreign_id)
 
       review.save!
+      imported += 1
     end
 
-    return unless document.css('div.paginationControl').present?
+    return imported unless document.css('div.paginationControl').present?
 
-    import_reviews(page + 1)
+    import_reviews(page + 1, imported)
   end
 
   def assign_review_stats(review_doc, review_record)
