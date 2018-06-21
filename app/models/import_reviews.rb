@@ -12,7 +12,7 @@ class ImportReviews
 
   attr_reader :company
 
-  def import_reviews(page=0)
+  def import_reviews(page=1)
     document = Nokogiri::HTML(Request.new(company.comments_url(page)).get)
 
     document.css('article[itemprop=review]').each do |review_doc|

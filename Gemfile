@@ -58,4 +58,5 @@ group :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
+  gem 'webmock'
 end
