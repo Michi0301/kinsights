@@ -28,6 +28,9 @@ class ImportReviews
         assign_ratings(rating_doc, review)
       end
 
+      # Stop import as soon as one known review appears
+      return if Review.exists?(foreign_id: review.foreign_id)
+
       review.save!
     end
 
