@@ -11,11 +11,11 @@ class ImportReviews
 
   attr_reader :company
 
-  def import_reviews(page=1, imported=0, type='Employee')
+  def import_reviews(page=1, imported=0, type='EmployeeReview')
     document = Nokogiri::HTML(Request.new(company.comments_url(page)).get)
 
     document.css('article[itemprop=review]').each do |review_doc|
-      review = company.reviews.build
+      review = company.reviews.build(type: type)
 
       assign_review_stats(review_doc, review)
 

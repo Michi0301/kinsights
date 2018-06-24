@@ -1,6 +1,6 @@
 # encoding: UTF-8
 module ReviewMapping
-  module Employee
+  module EmployeeReview
     module Scores
       MAPPING = {
         'Umwelt- / Sozialbewusstsein' => 'social_rating',
@@ -30,7 +30,7 @@ module ReviewMapping
     end
   end
 
-  module Applicant
+  module ApplicantReview
     module Scores
       MAPPING = {
         'Zufriedenstellende Reaktion' => 'response_quality_rating',

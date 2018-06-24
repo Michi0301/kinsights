@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Review, type: :model do
-  subject { FactoryBot.build(:review) }
+RSpec.describe EmployeeReview, type: :model do
+  subject { FactoryBot.build(:employee_review) }
 
   describe 'validations' do
     it { is_expected.to validate_uniqueness_of(:foreign_id).case_insensitive }

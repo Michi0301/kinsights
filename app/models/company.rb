@@ -2,6 +2,7 @@ class Company < ApplicationRecord
   validates :name, :url, presence: true
 
   has_many :reviews, inverse_of: :company, dependent: :destroy
+  has_many :employee_reviews, inverse_of: :company, dependent: :destroy
   has_many :charts, dependent: :destroy
   has_many :data_sets, through: :charts
 
