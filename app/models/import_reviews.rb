@@ -11,7 +11,7 @@ class ImportReviews
 
   attr_reader :company
 
-  def import_reviews(page=1, imported=0)
+  def import_reviews(page=1, imported=0, type='Employee')
     document = Nokogiri::HTML(Request.new(company.comments_url(page)).get)
 
     document.css('article[itemprop=review]').each do |review_doc|
@@ -20,11 +20,11 @@ class ImportReviews
       assign_review_stats(review_doc, review)
 
       review_doc.css('div.review-details.user-content li').each do |user_content_doc|
-        assign_user_content(user_content_doc, review)
+        assign_user_content(user_content_doc, review, type)
       end
 
       review_doc.css('div.rating-group').each do |rating_doc|
-        assign_ratings(rating_doc, review)
+        assign_ratings(rating_doc, review, type)
       end
 
       # Stop import as soon as one known review appears
@@ -45,19 +45,22 @@ class ImportReviews
     review_record.foreign_id = (review_doc.css('div.mobile-review-title h1.review-title a')[0]['href'].strip).split('/').last
   end
 
-  def assign_user_content(user_content_doc, review_record)
+  def assign_user_content(user_content_doc, review_record, type)
     user_content_key = user_content_doc.css('div.text-sm.text-gray-base-70.text-light.text-uppercase').text.strip
     user_content_value =  user_content_doc.css('div.text-semibold').text.strip
 
-    user_content_attribute = ReviewMapping::UserContent::MAPPING[user_content_key]
+    mapping = "ReviewMapping::#{type}::UserContent::MAPPING".constantize
+
+    user_content_attribute = mapping[user_content_key]
     review_record.assign_attributes(user_content_attribute => user_content_value)
   end
 
-  def assign_ratings(rating_doc, review_record)
+  def assign_ratings(rating_doc, review_record, type)
     review_score_key = rating_doc.css('span.rating-title').text.strip
     review_score_value = Parsers::CommaFloat.new(rating_doc.css('span.rating-badge').text).parse
 
-    review_score_attribute = ReviewMapping::Scores::MAPPING[review_score_key]
+    mapping = "ReviewMapping::#{type}::Scores::MAPPING".constantize
+    review_score_attribute = mapping[review_score_key]
     review_record.assign_attributes(review_score_attribute => review_score_value)
   end
 end
