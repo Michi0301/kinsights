@@ -95,6 +95,12 @@ RSpec.describe ImportReviews, type: :model do
         expect{ subject }.to change(Review, :count).by(1)
       end
 
+      it 'imports new published reviews first' do
+        subject
+
+        expect(Review.last.foreign_id).to eq('SkdhVVN2fw%3D%3D')
+      end
+
       it 'returns the amount of imported reviews' do
         expect(subject).to eq(1)
       end
