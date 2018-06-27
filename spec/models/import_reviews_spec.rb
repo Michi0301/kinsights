@@ -7,7 +7,7 @@ RSpec.describe ImportReviews, type: :model do
     let(:company) { FactoryBot.create(:company, url: 'https://test.de/de/my-company')}
 
     before do
-      stub_request(:get, 'https://test.de/de/my-company/kommentare/1&sort=update_time_desc')
+      stub_request(:get, 'https://test.de/de/my-company/kommentare/1?sort=update_time_desc')
       .with(
         headers: {
           'Accept'=>'*/*',
@@ -16,7 +16,7 @@ RSpec.describe ImportReviews, type: :model do
         })
         .to_return(status: 200, body: File.open(Rails.root.join('spec/fixtures/review_stats_page_1.html')))
 
-        stub_request(:get, 'https://test.de/de/my-company/kommentare/2&sort=update_time_desc')
+        stub_request(:get, 'https://test.de/de/my-company/kommentare/2?sort=update_time_desc')
         .with(
           headers: {
             'Accept'=>'*/*',
@@ -28,7 +28,7 @@ RSpec.describe ImportReviews, type: :model do
 
     context 'full import' do
       it 'imports all reviews' do
-        expect{ subject }.to change(Review, :count).by(20)
+        expect{ subject }.to change(EmployeeReview, :count).by(20)
       end
 
       it 'returns the amount of imported reviews' do
@@ -38,7 +38,7 @@ RSpec.describe ImportReviews, type: :model do
       it 'assigns correct values' do
         subject
 
-        expect(Review.first).to have_attributes(
+        expect(EmployeeReview.first).to have_attributes(
           total_rating: 4.77,
           publish_date: Date.parse('2018-05-23'),
           foreign_id: 'SkdhVVN2fw%3D%3D',
@@ -66,7 +66,7 @@ RSpec.describe ImportReviews, type: :model do
 
     context 'partial import' do
       before do
-        FactoryBot.create(:review,
+        FactoryBot.create(:employee_review,
           company: company,
           total_rating: 4.77,
           publish_date: "2018-05-23",
@@ -92,7 +92,13 @@ RSpec.describe ImportReviews, type: :model do
       end
 
       it 'only imports unknown reviews' do
-        expect{ subject }.to change(Review, :count).by(1)
+        expect{ subject }.to change(EmployeeReview, :count).by(1)
+      end
+
+      it 'imports new published reviews first' do
+        subject
+
+        expect(EmployeeReview.last.foreign_id).to eq('SkdhVVN2fw%3D%3D')
       end
 
       it 'returns the amount of imported reviews' do
