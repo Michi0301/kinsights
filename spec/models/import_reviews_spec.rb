@@ -7,7 +7,7 @@ RSpec.describe ImportReviews, type: :model do
     let(:company) { FactoryBot.create(:company, url: 'https://test.de/de/my-company')}
 
     before do
-      stub_request(:get, 'https://test.de/de/my-company/kommentare/1')
+      stub_request(:get, 'https://test.de/de/my-company/kommentare/1&sort=update_time_desc')
       .with(
         headers: {
           'Accept'=>'*/*',
@@ -16,7 +16,7 @@ RSpec.describe ImportReviews, type: :model do
         })
         .to_return(status: 200, body: File.open(Rails.root.join('spec/fixtures/review_stats_page_1.html')))
 
-        stub_request(:get, 'https://test.de/de/my-company/kommentare/2')
+        stub_request(:get, 'https://test.de/de/my-company/kommentare/2&sort=update_time_desc')
         .with(
           headers: {
             'Accept'=>'*/*',

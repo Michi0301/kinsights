@@ -9,8 +9,8 @@ RSpec.describe Company, type: :model do
   end
 
   describe '#comments_url' do
-    it { expect(subject.comments_url).to eq('https://www.example.com/de/acme-inc/kommentare/1') }
-    it { expect(subject.comments_url(5)).to eq('https://www.example.com/de/acme-inc/kommentare/5') }
+    it { expect(subject.comments_url).to eq('https://www.example.com/de/acme-inc/kommentare/1&sort=update_time_desc') }
+    it { expect(subject.comments_url(5)).to eq('https://www.example.com/de/acme-inc/kommentare/5&sort=update_time_desc') }
   end
 
   describe '#trend' do

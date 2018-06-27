@@ -6,7 +6,7 @@ class Company < ApplicationRecord
   has_many :data_sets, through: :charts
 
   def comments_url(page=1)
-    "#{url}/kommentare/#{page}"
+    "#{url}/kommentare/#{page}&sort=update_time_desc"
   end
 
   def total_rating_trend
