@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ImportReviews, type: :model do
+RSpec.describe ImportReviews::Importer, type: :model do
   subject { described_class.new(company).call }
 
   describe '#call' do
