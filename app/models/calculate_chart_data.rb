@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CalculateChartData
   def initialize(company)
     @company = company
@@ -21,20 +23,20 @@ class CalculateChartData
     result = company.reviews.map do |review|
       reviews = company.reviews.where(type: type, publish_date: start_date..review.publish_date)
 
-      ratings = %i(
+      ratings = %i[
         work_life_rating
         work_environment_rating
         supervisor_behavior_rating
         colleague_behavior_rating
-      )
+      ]
 
       total_rating_avg = 0
 
       ratings.each do |rating|
-        total_rating_avg += reviews.sum(rating)  / reviews.count
+        total_rating_avg += reviews.sum(rating) / reviews.count
       end
 
-      total_rating_avg = total_rating_avg / ratings.size
+      total_rating_avg /= ratings.size
 
       [review.publish_date, total_rating_avg]
     end

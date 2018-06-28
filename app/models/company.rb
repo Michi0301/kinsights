@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Company < ApplicationRecord
   validates :name, :url, presence: true
 
@@ -6,7 +8,7 @@ class Company < ApplicationRecord
   has_many :charts, dependent: :destroy
   has_many :data_sets, through: :charts
 
-  def comments_url(page=1)
+  def comments_url(page = 1)
     "#{url}/kommentare/#{page}?sort=update_time_desc"
   end
 

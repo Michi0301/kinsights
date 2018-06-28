@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -39,24 +41,25 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'rubocop'
+  gem 'web-console', '>= 3.3.0'
 end
 
 # custom
-gem 'faraday'
 gem 'bootstrap', '~> 4.1.1'
-gem 'jquery-rails'
 gem 'chartkick'
+gem 'faraday'
+gem 'jquery-rails'
 
 group :test do
+  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.7'
   gem 'shoulda-matchers'
-  gem 'factory_bot_rails'
   gem 'webmock'
 end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Review < ApplicationRecord
-  REVIEW_TYPES = %w(EmployeeReview)
+  REVIEW_TYPES = %w[EmployeeReview].freeze
   belongs_to :company
 
   validates :foreign_id, uniqueness: true, case_sensitive: false

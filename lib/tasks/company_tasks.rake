@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 namespace :reviews do
-  desc "Imports reviews for all companies."
-  task :import => :environment do
+  desc 'Imports reviews for all companies.'
+  task import: :environment do
     Company.find_each do |company|
       imported = ImportReviews.new(company).call
 
@@ -11,7 +13,7 @@ namespace :reviews do
 
         Rails.logger.info "#{company.name}: Building up chart cache."
         CalculateChartData.new(company).call
-        
+
         Rails.logger.info "#{company.name}: Removing old chart cache."
         company.data_sets.outdated.destroy_all
       end

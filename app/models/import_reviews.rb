@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ImportReviews
   def initialize(company)
     @company = company
@@ -11,7 +13,7 @@ class ImportReviews
 
   attr_reader :company
 
-  def import_reviews(page=1, imported=0, type='EmployeeReview')
+  def import_reviews(page = 1, imported = 0, type = 'EmployeeReview')
     document = Nokogiri::HTML(Request.new(company.comments_url(page)).get)
 
     document.css('article[itemprop=review]').each do |review_doc|
@@ -42,12 +44,12 @@ class ImportReviews
   def assign_review_stats(review_doc, review_record)
     review_record.total_rating = Parsers::CommaFloat.new(review_doc.css('div.tile-rating div.tile-heading').text).parse
     review_record.publish_date = review_doc.css('meta[itemprop=dateCreated]')[0]['content'].strip
-    review_record.foreign_id = (review_doc.css('div.mobile-review-title h1.review-title a')[0]['href'].strip).split('/').last
+    review_record.foreign_id = review_doc.css('div.mobile-review-title h1.review-title a')[0]['href'].strip.split('/').last
   end
 
   def assign_user_content(user_content_doc, review_record, type)
     user_content_key = user_content_doc.css('div.text-sm.text-gray-base-70.text-light.text-uppercase').text.strip
-    user_content_value =  user_content_doc.css('div.text-semibold').text.strip
+    user_content_value = user_content_doc.css('div.text-semibold').text.strip
 
     mapping = "ReviewMapping::#{type}::UserContent::MAPPING".constantize
 

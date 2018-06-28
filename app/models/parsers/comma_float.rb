@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module Parsers
   class CommaFloat < Base
     def parse
-      string.strip.gsub('.', '').gsub(',', '.').to_f
+      string.strip.delete('.').tr(',', '.').to_f
     end
   end
 end
