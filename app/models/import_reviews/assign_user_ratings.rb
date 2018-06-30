@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ImportReviews
   class AssignUserRatings
     def initialize(rating_doc, review_record, type)

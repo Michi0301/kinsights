@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ImportReviews
   class AssignReviewAttrs
     def initialize(review_doc, review_record)
@@ -9,7 +11,7 @@ module ImportReviews
       assign_review_attrs(review_doc, review_record)
     end
 
-    private 
+    private
 
     attr_reader :review_doc, :review_record
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module ImportReviews
   class Importer
     def initialize(company, review_class)
@@ -46,8 +47,8 @@ module ImportReviews
     def url_for(review_class)
       return :comments_url if review_class == EmployeeReview
       return :applicants_url if review_class == ApplicantReview
-      
-      fail 'Review class not supported!'
+
+      raise 'Review class not supported!'
     end
   end
 end

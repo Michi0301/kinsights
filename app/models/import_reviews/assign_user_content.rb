@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module ImportReviews
   class AssignUserContent
-    def initialize (user_content_doc, review_record, type)
-    @user_content_doc = user_content_doc 
-    @review_record = review_record 
-    @type = type
+    def initialize(user_content_doc, review_record, type)
+      @user_content_doc = user_content_doc
+      @review_record = review_record
+      @type = type
     end
 
     def call

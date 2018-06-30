@@ -26,8 +26,8 @@ class Company < ApplicationRecord
 
   private
 
-  def total_rating_average_for_last(n)
-    reviews.last(n).pluck(:total_rating).sum / n
+  def total_rating_average_for_last(number_of_reviews)
+    reviews.last(number_of_reviews).pluck(:total_rating).sum / number_of_reviews
   end
 
   def trend_is_positive?
