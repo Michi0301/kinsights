@@ -56,6 +56,7 @@ gem 'bootstrap', '~> 4.1.1'
 gem 'chartkick'
 gem 'faraday'
 gem 'jquery-rails'
+gem 'jsonb_accessor', '~> 1.0.0'
 
 group :test do
   gem 'factory_bot_rails'

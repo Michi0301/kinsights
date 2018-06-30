@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_30_130723) do
+ActiveRecord::Schema.define(version: 2018_06_30_164808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,41 +43,13 @@ ActiveRecord::Schema.define(version: 2018_06_30_130723) do
   create_table "reviews", force: :cascade do |t|
     t.float "total_rating"
     t.date "publish_date"
-    t.float "social_rating"
-    t.float "work_life_rating"
-    t.float "image_rating"
-    t.float "work_environment_rating"
-    t.float "supervisor_behavior_rating"
-    t.float "colleague_behavior_rating"
-    t.float "interesting_tasks_rating"
-    t.float "communication_rating"
-    t.float "equality_rating"
-    t.float "elder_colleagues_rating"
-    t.float "career_rating"
-    t.float "salary_rating"
-    t.float "working_conditions_rating"
-    t.string "company_name"
-    t.string "city"
-    t.string "job_state"
-    t.string "position"
-    t.string "department"
     t.bigint "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "foreign_id", null: false
     t.string "type"
-    t.float "response_quality_rating"
-    t.float "response_time_rating"
-    t.float "application_process_rating"
-    t.float "interview_professionality_rating"
-    t.float "information_completeness_rating"
-    t.float "interview_mood_rating"
-    t.float "applicant_threatment_rating"
-    t.float "answer_quality_rating"
-    t.float "further_steps_rating"
-    t.float "timely_interview_result_rating"
-    t.integer "application_year"
-    t.string "result"
+    t.jsonb "ratings_data"
+    t.jsonb "user_content_data"
     t.index ["company_id"], name: "index_reviews_on_company_id"
     t.index ["foreign_id"], name: "index_reviews_on_foreign_id"
   end
