@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe ImportReviews::Importer, type: :model do
-  subject { described_class.new(company).call }
+  let(:review_class) { EmployeeReview }
+  subject { described_class.new(company, review_class).call }
 
   describe '#call' do
     let(:company) { FactoryBot.create(:company, url: 'https://test.de/de/my-company') }

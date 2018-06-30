@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 module ImportReviews
   class Importer
-    def initialize(company)
+    def initialize(company, review_class)
       @company = company
+      @review_class = review_class
     end
 
     def call
@@ -11,22 +12,23 @@ module ImportReviews
 
     private
 
-    attr_reader :company
+    attr_reader :company, :review_class
 
-    def import_reviews(page = 1, imported = 0, type = 'EmployeeReview')
-      document = Nokogiri::HTML(Request.new(company.comments_url(page)).get)
+    def import_reviews(page = 1, imported = 0)
+      html_body = Request.new(company.send(url_for(review_class), page)).get
+      parsed_html = Nokogiri::HTML(html_body)
 
-      document.css('article[itemprop=review]').each do |review_doc|
-        review = company.reviews.build(type: type)
+      parsed_html.css('article[itemprop=review]').each do |review_article|
+        review = review_class.new(company_id: company.id)
 
-        ImportReviews::AssignReviewAttrs.new(review_doc, review).call
+        ImportReviews::AssignReviewAttrs.new(review_article, review).call
 
-        review_doc.css('div.review-details.user-content li').each do |user_content_doc|
-          ImportReviews::AssignUserContent.new(user_content_doc, review, type).call
+        review_article.css('div.review-details.user-content li').each do |user_content_doc|
+          ImportReviews::AssignUserContent.new(user_content_doc, review, review_class).call
         end
 
-        review_doc.css('div.rating-group').each do |rating_doc|
-          ImportReviews::AssignUserRatings.new(rating_doc, review, type).call
+        review_article.css('div.rating-group').each do |rating_doc|
+          ImportReviews::AssignUserRatings.new(rating_doc, review, review_class).call
         end
 
         # Stop import as soon as one known review appears
@@ -36,9 +38,16 @@ module ImportReviews
         imported += 1
       end
 
-      return imported unless document.css('div.paginationControl').present?
+      return imported unless parsed_html.css('div.paginationControl').present?
 
       import_reviews(page + 1, imported)
+    end
+
+    def url_for(review_class)
+      return :comments_url if review_class == EmployeeReview
+      return :applicants_url if review_class == ApplicantReview
+      
+      fail 'Review class not supported!'
     end
   end
 end

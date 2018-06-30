@@ -12,6 +12,10 @@ class Company < ApplicationRecord
     "#{url}/kommentare/#{page}?sort=update_time_desc"
   end
 
+  def applicants_url(page = 1)
+    "#{url}/bewerbung/#{page}?sort=update_time_desc"
+  end
+
   def total_rating_trend
     trend_is_positive? ? :positive : :negative
   end
