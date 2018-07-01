@@ -21,5 +21,14 @@
     <h6 class="card-subtitle mb-2 text-muted">Rating count:</h6>
 
     <%= render_daily_avg_review_count(company) %>
+    
+    <div class="row mt-4">
+      <div class="col-6">
+        <%= render partial: 'review_distribution', locals: {company: company}%>
+      </div>
+      <div class="col-4">
+        <%= render partial: 'latest_reviews', locals: {company: company}%>
+      </div>
+    </div>
   </div>
 </div>

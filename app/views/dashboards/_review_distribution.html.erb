@@ -1,0 +1,1 @@
+<%= pie_chart company.reviews.group(:type).count.map{|k, v| [k.constantize.display_type, v]}.sort, donut: true %>

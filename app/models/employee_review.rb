@@ -29,4 +29,8 @@ class EmployeeReview < Review
   def url
     "#{company.url}/a/#{foreign_id}"
   end
+
+  def self.display_type
+    'Employee'
+  end
 end

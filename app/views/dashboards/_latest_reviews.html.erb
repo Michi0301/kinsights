@@ -1,0 +1,6 @@
+<h6 class="card-subtitle text-muted mb-4">Latest reviews</h3>
+<ul class="list-group">
+  <% company.reviews.order(publish_date: :desc).first(5).each do |review|%>
+    <li class="list-group-item"><%=link_to_review(review)%></li>
+  <% end %>
+</ul>

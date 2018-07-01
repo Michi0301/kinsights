@@ -6,10 +6,10 @@ class CalculateChartData
   end
 
   def call
-    Review::REVIEW_TYPES.each do |type|
+    Review::REVIEW_TYPES.dup.push('all').each do |type|
       calculate_daily_avg_review_count(company, type)
       calculate_daily_avg_review_rating(company, type)
-      calculate_daily_avg_happiness_rating(company, type)
+      calculate_daily_avg_review_rating(company, type)
     end
   end
 
@@ -17,42 +17,15 @@ class CalculateChartData
 
   attr_reader :company, :chart
 
-  def calculate_daily_avg_happiness_rating(company, type)
-    start_date = company.reviews.order(:publish_date).first.publish_date
-
-    result = company.reviews.map do |review|
-      reviews = company.reviews.where(type: type, publish_date: start_date..review.publish_date)
-
-      ratings = %i[
-        work_life_rating
-        work_environment_rating
-        supervisor_behavior_rating
-        colleague_behavior_rating
-      ]
-
-      total_rating_avg = 0
-
-      ratings.each do |rating|
-        total_rating_avg += reviews.sum(rating) / reviews.count
-      end
-
-      total_rating_avg /= ratings.size
-
-      [review.publish_date, total_rating_avg]
-    end
-
-    store_chart_data(company, result, 'daily_avg_review_rating', "daily_#{type.underscore}_avg_happiness_rating")
-
-    result
-  end
-
   def calculate_daily_avg_review_count(company, type)
     start_date = company.reviews.order(:publish_date).first.publish_date
 
     result = company.reviews.map do |review|
-      total_rating_avg_count = company.reviews.where(type: type, publish_date: start_date..review.publish_date).count
-
-      [review.publish_date, total_rating_avg_count]
+      if type == 'all'
+        [review.publish_date, company.reviews.where(publish_date: start_date..review.publish_date).count]
+      else
+        [review.publish_date, company.reviews.where(type: type, publish_date: start_date..review.publish_date).count]
+      end
     end
 
     store_chart_data(company, result, 'daily_avg_review_count', "daily_#{type.underscore}_avg_review_count")
@@ -64,7 +37,11 @@ class CalculateChartData
     start_date = company.reviews.order(:publish_date).first.publish_date
 
     result = company.reviews.map do |review|
-      reviews = company.reviews.where(type: type, publish_date: start_date..review.publish_date)
+      reviews = if type == 'all'
+        company.reviews.where(publish_date: start_date..review.publish_date)
+      else
+        company.reviews.where(type: type, publish_date: start_date..review.publish_date)
+      end
 
       total_rating_avg = reviews.sum(:total_rating) / reviews.count
 

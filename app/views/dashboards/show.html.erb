@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-12">
     <% @companies.each do |company| %>
-      <%= render partial: 'company_stats', locals: { company: company } %>
+      <%= render partial: 'company_card', locals: { company: company } %>
     <% end %>
   </div>
 </div>
