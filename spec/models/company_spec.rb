@@ -16,25 +16,7 @@ RSpec.describe Company, type: :model do
   end
 
   describe '#trend' do
-    context 'positive' do
-      before do
-        subject.save!
-        10.times { FactoryBot.create(:employee_review, company: subject, total_rating: 3.0) }
-        5.times  { FactoryBot.create(:employee_review, company: subject, total_rating: 4.0) }
-      end
-
-      it { expect(subject.total_rating_trend).to eq(:positive) }
-    end
-
-    context 'negative' do
-      before do
-        subject.save!
-        10.times { FactoryBot.create(:employee_review, company: subject, total_rating: 3.0) }
-        5.times  { FactoryBot.create(:employee_review, company: subject, total_rating: 2.0) }
-      end
-
-      it { expect(subject.total_rating_trend).to eq(:negative) }
-    end
+    #FIXME: Add tests!
   end
 
   describe '#total_rating_average' do

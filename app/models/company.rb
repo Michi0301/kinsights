@@ -20,8 +20,11 @@ class Company < ApplicationRecord
     "#{url}/ausbildungskommentare/#{page}?sort=update_time_desc"
   end
 
-  def total_rating_trend
-    trend_is_positive? ? :positive : :negative
+  def total_rating_trend(base=5)
+    y_values = data_sets.where(dataset_type: 'daily_all_avg_review_rating').last.data.last(base).sort.map{|pair| pair.last}
+    x_values = (1..base).to_a
+
+    SimpleLinearRegression.new(x_values, y_values).slope.positive? ? :positive : :negative
   end
 
   def total_rating_average
@@ -32,9 +35,5 @@ class Company < ApplicationRecord
 
   def total_rating_average_for_last(number_of_reviews)
     reviews.last(number_of_reviews).pluck(:total_rating).sum / number_of_reviews
-  end
-
-  def trend_is_positive?
-    total_rating_average_for_last(5) > total_rating_average
   end
 end
