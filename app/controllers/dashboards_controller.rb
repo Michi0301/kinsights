@@ -2,6 +2,12 @@
 
 class DashboardsController < ApplicationController
   def show
-    @companies = Company.order(:name)
+    company = Company.find_by(name: params[:company])
+
+    if company
+      @companies = [company]
+    else
+      @companies = Company.order(:name)
+    end
   end
 end
