@@ -10,9 +10,9 @@ RSpec.describe Company, type: :model do
     it { is_expected.to validate_presence_of(:name) }
   end
 
-  describe '#comments_url' do
-    it { expect(subject.comments_url).to eq('https://www.example.com/de/acme-inc/kommentare/1?sort=update_time_desc') }
-    it { expect(subject.comments_url(5)).to eq('https://www.example.com/de/acme-inc/kommentare/5?sort=update_time_desc') }
+  describe '#employee_comments_url' do
+    it { expect(subject.employee_comments_url).to eq('https://www.example.com/de/acme-inc/kommentare/1?sort=update_time_desc') }
+    it { expect(subject.employee_comments_url(5)).to eq('https://www.example.com/de/acme-inc/kommentare/5?sort=update_time_desc') }
   end
 
   describe '#trend' do

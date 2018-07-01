@@ -45,8 +45,9 @@ module ImportReviews
     end
 
     def url_for(review_class)
-      return :comments_url if review_class == EmployeeReview
-      return :applicants_url if review_class == ApplicantReview
+      return :employee_comments_url if review_class == EmployeeReview
+      return :applicant_comments_url if review_class == ApplicantReview
+      return :apprentice_comments_url if review_class == ApprenticeReview
 
       raise 'Review class not supported!'
     end

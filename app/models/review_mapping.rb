@@ -57,4 +57,29 @@ module ReviewMapping
       }.freeze
     end
   end
+
+  module ApprenticeReview
+    module Scores
+      MAPPING = {
+        'Die Ausbilder' => 'instructor_rating',
+        'Spaßfaktor' => 'fun_rating',
+        'Aufgaben/Tätigkeiten' => 'tasks_rating',
+        'Abwechslung' => 'diversity_rating',
+        'Respekt' => 'respect_rating',
+        'Karrierechancen' => 'career_rating',
+        'Betriebsklima' => 'working_atmosphere_rating',
+        'Ausbildungsvergütung' => 'salary_rating',
+        'Arbeitszeiten' => 'working_hours_rating'
+      }.freeze
+    end
+
+    module UserContent
+      MAPPING = {
+        'Firma' => 'company_name',
+        'Stadt' => 'city',
+        'Jobstatus' => 'job_state',
+        'Unternehmensbereich' => 'department'
+      }.freeze
+    end
+  end
 end

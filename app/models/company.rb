@@ -8,12 +8,16 @@ class Company < ApplicationRecord
   has_many :charts, dependent: :destroy
   has_many :data_sets, through: :charts
 
-  def comments_url(page = 1)
+  def employee_comments_url(page = 1)
     "#{url}/kommentare/#{page}?sort=update_time_desc"
   end
 
-  def applicants_url(page = 1)
+  def applicant_comments_url(page = 1)
     "#{url}/bewerbung/#{page}?sort=update_time_desc"
+  end
+
+  def apprentice_comments_url(page = 1)
+    "#{url}/ausbildungskommentare/#{page}?sort=update_time_desc"
   end
 
   def total_rating_trend
