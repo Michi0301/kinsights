@@ -20,9 +20,9 @@ class Company < ApplicationRecord
     "#{url}/ausbildungskommentare/#{page}?sort=update_time_desc"
   end
 
-  def total_rating_trend(base=5)
-    y_values = data_sets.where(dataset_type: 'daily_all_avg_review_rating').last.data.last(base).sort.map{|pair| pair.last}
-    x_values = (1..base).to_a
+  def total_rating_trend(base=10)
+    y_values = reviews.order(publish_date: :desc).limit(base).pluck(:total_rating)
+    x_values = (1..y_values.size).to_a
 
     SimpleLinearRegression.new(x_values, y_values).slope.positive? ? :positive : :negative
   end
