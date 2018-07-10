@@ -31,5 +31,9 @@ module Kinsights
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # Custom configuration
+    config.x.basic_auth_user = ENV.fetch('HTTP_BASIC_AUTH_USER', 'guest')
+    config.x.basic_auth_password = ENV.fetch('HTTP_BASIC_AUTH_PASSWORD', 'guest')
   end
 end
